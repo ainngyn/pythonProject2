@@ -1,18 +1,15 @@
 {% extends 'layout/base.html' %}
-{% block title %}Trang chu{% endblock %}
+{% block title %}Home {% endblock %}
 {% block content %}
-<h1 class="subject">CHAO MUNG </h1>
-<div class="container">
-    {% if pages > 1 %}
-    <ul class="pagination">
-        {% for idx in range(1, pages +1)  %}
-      <li class="page-item"><a class="page-link" href="{{ url_for('home',page= idx )}}">{{ idx }}</a></li>
-        {% endfor %}
+<h1 class="subject">Chào mừng đến với websize </h1>
 
-
-    </ul>
+{% if pages > 1 %}
+<ul class="pagination">
+    {% for idx in range(1, pages +1)  %}
+    <li class="page-item"><a class="page-link" href="{{ url_for('home',page= idx )}}">{{ idx }}</a></li>
+    {% endfor %}
+</ul>
     {% endif %}
-
     <div class="row">
         {% if products %}
         {% for p in products %}
@@ -22,18 +19,16 @@
               <div class="card-body">
                 <h4 class="card-title">{{ p.name }}</h4>
                 <p class="card-text">{{ "{:,.1f}".format(p.price) }}</p>
-                <a href="#" class="btn btn-primary">See Profile</a>
+                <a href="#" class="btn btn-primary" onclick= "addToCart({{ p.id }}, '{{ p.name }}', {{ p.price }})">Đặt hàng</a>
               </div>
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <p>
+        <i>Không có sản phẩm nào!!!</i>
+        </p>
+        {% endif %}
 
     </div>
-    {% else %}
-    <p>
-        <i>Không có sản phẩm nào!!!</i>
-    </p>
-    {% endif %}
-</div>
-
 {% endblock %}

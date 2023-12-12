@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="subject">DANH SACH SP</h1>
+        <h1 class="subject">DANH SÁCH SẢN PHẨM </h1>
         <hr>
         <form >
             <input type="text" name="keyword" placeholder="Nhập từ khóa muốn tìm..."/>
@@ -19,10 +19,10 @@
    <table border="1" class="product" width="100%">
         <tr>
             <th></th>
-            <th>ma san pham</th>
-            <th>ten san pham</th>
-            <th>mo ta</th>
-            <th>gia ban</th>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Mô tả</th>
+            <th>Gía bán</th>
         </tr>
        {% for p in products %}
        <tr>
@@ -36,6 +36,7 @@
            <td>{{ p.description}}</td>
            <td>{{ "{:,.1f}".format(p.price) }} VND</td>
        </tr>
+
        {% endfor %}
    </table>
     </div>

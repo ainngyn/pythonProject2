@@ -1,0 +1,41 @@
+{% extends 'layout/base.html' %}
+{% block title %}Đăng ký người dùng {% endblock %}
+{% block content %}
+<h1 class="text-center text-danger"> Đăng ký người dùng</h1>
+
+
+
+{% if err_mgs %}
+<div class="alert alert-danger">
+    <h4>{{ err_mgs}}</h4>
+</div>
+{% endif %}
+<form method="post" action="{{ (url_for('user_register')) }}" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Họ tên</label>
+        <input type="text" class="form-control" id="name" name="name" required/>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email"/>
+    </div>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required/>
+    </div>
+    <div class="form-group">
+        <label for="pass">Mật khẩu</label>
+        <input type="password" class="form-control" id="pass" name="password" />
+    </div>
+    <div class="form-group">
+        <label for="confirm">Xác nhận mật khẩu</label>
+        <input type="password" class="form-control" id="confirm" name="confirm" />
+    </div>
+    <div class="form-group">
+        <label for="avatar">Anh đại diện </label>
+        <input type="file" class="form-control" id="avatar" name="avatar"/>
+    </div>
+    <input type="submit" value="Đăng ký" class="btn btn-danger">
+</form>
+<br><br>
+{% endblock %}

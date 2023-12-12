@@ -1,0 +1,23 @@
+{% extends 'layout/base.html' %}
+{% block title %} Đăng nhập người dùng {% endblock %}
+{% block content %}
+<h1 class="text-center text-danger"> Đăng nhập người dùng</h1>
+{% if err_mgs %}
+<div class="alert alert-danger">
+    <h4>{{ err_mgs}}</h4>
+</div>
+{% endif %}
+<form method="post"/>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required/>
+    </div>
+    <div class="form-group">
+        <label for="pass">Mật khẩu</label>
+        <input type="password" class="form-control" id="pass" name="password" />
+    </div>
+
+    <input type="submit" value="Đăng nhập" class="btn btn-danger">
+</form>
+<br><br>
+{% endblock %}
