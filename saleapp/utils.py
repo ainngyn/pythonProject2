@@ -1,7 +1,7 @@
 import idlelib.undo
 import json, os
 from saleapp import app, db
-from saleapp.models import Category, Product, User, Receipt, ReceiptDetail, UserRole
+from saleapp.models import Category, Product, User, Receipt, ReceiptDetail, UserRole, Comment
 from flask_login import current_user
 import hashlib
 from sqlalchemy import func
@@ -141,3 +141,8 @@ def add_receipt(cart):
         db.session.commit()
 
 
+def add_comment(content, product_id):
+    c = Comment(content=content, product_id=product_id, user=current_user)
+    db.session.add(c)
+    db.session.commit()
+    return c

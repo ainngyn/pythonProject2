@@ -1,5 +1,5 @@
 import math
-
+from sqlalchemy.orm import make_transient
 from flask import render_template, request, redirect, url_for, session, jsonify
 from saleapp import app,login
 import utils
@@ -144,6 +144,19 @@ def add_to_cart():
 # @app.route('/cart')
 # def cart():
 #     return render_template('cart.html', stats=utils.count_cart(session['cart']))
+@app.route('/api/update-cart', methods = ['put'])
+def update_Cart():
+    data = request.json
+    id = str(data.get('id'))
+    quantity = data.get('quantity')
+
+    cart = session.get('cart')
+    if cart and id in cart:
+        cart[id]['quantity'] = quantity
+        session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
 @app.route('/cart')
 def cart():
     cart_stats = utils.count_cart(session.get('cart', {}))  # Sử dụng session.get để tránh KeyError
@@ -161,6 +174,36 @@ def pay():
     return jsonify({'code': 200})
 
 
+
+@app.route('/api/delete-cart/<product_id>', methods = ['delete'])
+def delete_cart(product_id):
+    cart = session.get('cart')
+
+    if cart and product_id in cart:
+        del cart[product_id]
+        session['cart'] = cart
+    return jsonify(utils.count_cart(cart))
+
+@app.route('/api/comments', methods=['post'])
+@login_required
+def add_comment():
+    data = request.json
+    content = data.get('content')
+    product_id = data.get('product_id')
+    try:
+        c = utils.add_comment(content=content,product_id=product_id)
+        make_transient(c)
+    except:
+        return {'status': 404, 'err_msg': 'chuong trinh dang loi'}
+    return {'status': 201, 'comment': {
+        'id': c.id,
+        'content': c.content,
+        'created_date': c.created_date,
+        'user': {
+            'username': current_user.username,
+            'avatar': current_user.avatar
+        }
+    }}
 
 
 
