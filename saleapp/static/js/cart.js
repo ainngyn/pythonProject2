@@ -70,7 +70,7 @@ function updateCart(id, obj){
 }
 
 function deleteCart(id) {
-    if(confirm("xoa kh ?") == true){
+    if(confirm("Bạn có chắc chắn xóa không?") == true){
         fetch('/api/delete-cart/' + id,{
         method :'delete',
         headers: {

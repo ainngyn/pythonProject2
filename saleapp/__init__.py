@@ -1,4 +1,5 @@
 from flask import Flask
+# test
 from flask_sqlalchemy import SQLAlchemy
 import cloudinary
 from flask_login import LoginManager
@@ -9,6 +10,7 @@ app.secret_key ='c38rcue02im9867T647Y8^$#^&*ub878%$*hip*^$#&ttb'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/prjpython?charset=utf8mb4'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['PAGE_SIZE'] = 4
+app.config['COMMENT_SIZE'] = 20
 db = SQLAlchemy(app=app)
 
 cloudinary.config(

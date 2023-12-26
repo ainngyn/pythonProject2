@@ -6,6 +6,7 @@ import utils
 import cloudinary.uploader
 from flask_login import login_user, logout_user, login_required
 from saleapp.models import UserRole
+# TEST
 @app.route("/")
 def home():
 
@@ -38,9 +39,14 @@ def product_list():
 @app.route("/products/<int:product_id>")
 def product_detail(product_id):
     product = utils.get_product_by_id(product_id)
+    comments = utils.get_comments(product_id=product_id,
+                                  page=int(request.args.get('page',1)))
 
     return render_template('product_detail.html',
-                           product=product)
+                           comments=comments,
+                           product=product,
+                           pages=math.ceil(utils.count_comment(product_id=product_id)/app.config['COMMENT_SIZE']))
+
 @app.route('/register', methods = ['get', 'post'])
 def user_register():
     err_mgs =''
@@ -67,7 +73,7 @@ def user_register():
                                )
                 return redirect(url_for('user_signin'))
             else:
-                err_mgs ='mat khau khong khop!'
+                err_mgs ='mật khẩu không khớp!'
         except Exception as ex:
             err_mgs ='he thong dang co loi' +str(ex)
     return  render_template('register.html', err_mgs=err_mgs)
@@ -194,7 +200,7 @@ def add_comment():
         c = utils.add_comment(content=content,product_id=product_id)
         make_transient(c)
     except:
-        return {'status': 404, 'err_msg': 'chuong trinh dang loi'}
+        return {'status': 404, 'err_msg': 'chương trình đang lỗi!'}
     return {'status': 201, 'comment': {
         'id': c.id,
         'content': c.content,

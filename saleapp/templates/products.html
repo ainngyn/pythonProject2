@@ -2,44 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet"/>
+    <title>Danh sach san pham</title>
+     <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        <h1 class="subject">DANH SÁCH SẢN PHẨM </h1>
-        <hr>
-        <form >
-            <input type="text" name="keyword" placeholder="Nhập từ khóa muốn tìm..."/>
-            <input type="number" name="from_price" placeholder="Nhập giá bắt đầu..." />
-            <input type="number" name="to_price" placeholder="Nhập giá kết thúc..."/>
-            <input type="submit" value="Tim"/>
-        </form>
-        <hr>
-   <table border="1" class="product" width="100%">
-        <tr>
-            <th></th>
-            <th>Mã sản phẩm</th>
-            <th>Tên sản phẩm</th>
-            <th>Mô tả</th>
-            <th>Gía bán</th>
-        </tr>
-       {% for p in products %}
-       <tr>
-           <td>
-               <a href="{{ url_for('product_detail', product_id=p.id) }}">
-                    <img src="{{ url_for('static',filename=p.image)}}" width="120" alt="{{ p.name }}"/>
-               </a>
-           </td>
-           <td>{{ p.id }}</td>
-           <td>{{ p.name }}</td>
-           <td>{{ p.description}}</td>
-           <td>{{ "{:,.1f}".format(p.price) }} VND</td>
-       </tr>
+<div class="container">
+<h1 class ="subject"> Danh Muc San Pham</h1>
+    <hr>
+    <form>
+        <input type ="text" name="keyword" placeholder="Nhap tu khoa muon tim.."/>
+        <input type = "number" name="from_price" placeholder="Nhap Gia Bat Dau..."/>
+        <input type = "number" name="to_price" placeholder="Nhap Gia Ket Thuc..."/>
+        <input type = "submit" value ="Tim"/>
 
-       {% endfor %}
-   </table>
+    </form>
+    <hr>
+<table border="1" class="product">
+    <tr>
+        <th></th>
+        <th>Ma san pham</th>
+        <th>Ten san pham</th>
+        <th>Mo ta</th>
+        <th>Gia ban</th>
+    </tr>
+    {% for p in products %}
+    <tr>
+        <td>
+            <a href="{{ url_for('product_detail',product_id=p.id)}}">
+             <img src="{{ url_for('static',filename=p.image)}}" width="120" alt="{{p.name}}"/>
+            </a>
+        </td>
+        <td>{{p.id}}</td>
+        <td>{{p.name}}</td>
+        <td>{{p.description}}</td>
+        <td>{{"{:,.1f}".format (p.price)}} VND</td>
+    </tr>
+    {% endfor %}
+</table>
     </div>
-
 </body>
 </html>

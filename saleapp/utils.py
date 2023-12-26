@@ -1,4 +1,5 @@
 import idlelib.undo
+# test
 import json, os
 from saleapp import app, db
 from saleapp.models import Category, Product, User, Receipt, ReceiptDetail, UserRole, Comment
@@ -146,3 +147,19 @@ def add_comment(content, product_id):
     db.session.add(c)
     db.session.commit()
     return c
+
+
+def get_comments(product_id,page=1):
+    page_size = app.config['COMMENT_SIZE']
+    start = (page - 1) * page_size
+    return Comment.query.filter(Comment.product_id.__eq__(product_id)).order_by(-Comment.id).slice(start, start + page_size).all()
+
+def count_comment(product_id):
+    return  Comment.query.filter(Comment.product_id.__eq__(product_id)).count()
+
+def add_comment(content, product_id):
+   c= Comment(content=content,product_id=product_id,user=current_user)
+   db.session.add(c)
+   db.session.commit()
+
+   return c
